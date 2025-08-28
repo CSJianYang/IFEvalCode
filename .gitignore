@@ -1,2 +1,6 @@
 loc_data
 local_dir
+data/eval_results
+tmp
+*.pyc
+*.log

@@ -1,6 +1,5 @@
 from utils import utils
 import argparse
-import transformers
 import json
 import tqdm
 import os
@@ -85,6 +84,7 @@ def main():
         data.sort(key=lambda x: x["id"])
     else:
         import vllm
+        import transformers
         tokenizer = transformers.AutoTokenizer.from_pretrained(args.model, trust_remote_code = True)
         if hasattr(tokenizer, "model_max_length"):
             args.model_max_len = args.model_max_len if tokenizer.model_max_length > args.model_max_len else tokenizer.model_max_length

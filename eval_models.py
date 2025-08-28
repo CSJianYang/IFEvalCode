@@ -1,4 +1,3 @@
-import yaml
 import argparse
 from utils import utils, code_execute_multiple, code_parser
 import os
@@ -260,13 +259,23 @@ def main():
         "tmp_dir": args.tmp_dir,
         "tree_sitter_path": args.tree_sitter_path
     }
-    output_objs = utils.multi_tasks_from_objs(objs, workers = args.workers, task = check_correctness_worker, chunk_size = 2, args = input_args)
+    output_objs = utils.multi_tasks_from_objs(objs, workers = args.workers, task = check_correctness_worker, args = input_args)
     utils.write_jsonl_file(output_objs, f"{args.output_path}/eval_results.log.jsonl")
     results = statistic_results_by_programming_languages(output_objs)
     results["model"] = output_objs[0]["model_name"] if "model_name" in output_objs[0] else None
     zh_results = []
     en_results = []
-    lgs = ["python", "java", "cpp", "csharp", "typescript", "javascript", "php", "shell", "all"]
+    lgs = [
+        "python", 
+        "java", 
+        "cpp", 
+        "csharp", 
+        "typescript", 
+        "javascript", 
+        "php", 
+        "shell", 
+        "all"
+        ]
     for lg in lgs:
         zh_results.append(str(results[lg]["zh_if_correct"]))
         zh_results.append(str(results[lg]["zh_if_instruction"]))

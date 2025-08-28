@@ -1,10 +1,12 @@
 from tree_sitter import Language, Parser
+import tree_sitter_cpp as ts_cpp
 import os
 
 def remove_cpp_main_function(cpp_code, tree_sitter_path):
-    CPP_LANGUAGE = Language(f'{tree_sitter_path}/tree-sitter-cpp.so', 'cpp')
-    parser = Parser()
-    parser.set_language(CPP_LANGUAGE)
+    #CPP_LANGUAGE = Language(f'{tree_sitter_path}/tree-sitter-cpp.so')
+    CPP_LANGUAGE = Language(ts_cpp.language())
+    parser = Parser(CPP_LANGUAGE)
+    #parser.set_language(CPP_LANGUAGE)
     tree = parser.parse(bytes(cpp_code, "utf8"))
     
     # 获取根节点
